@@ -9,6 +9,8 @@ phases:
       - pip install --upgrade pip
       - echo Installing dependencies...
       - pip install -r requirements.txt
+      - pip install pytest
+      - pip install jinja2 --upgrade
   build:
     commands:
       - echo Build started on `date`
