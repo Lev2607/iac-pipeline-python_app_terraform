@@ -3,14 +3,14 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.8
+      docker: 20
     commands:
       - echo Upgrading pip...
-      - pip install --upgrade pip
+      - docker run -v $(pwd):/app -w /app python:3.8 pip install --upgrade pip
       - echo Installing dependencies...
-      - pip install -r requirements.txt
-      - pip install pytest
-      - pip install jinja2 --upgrade
+      - docker run -v $(pwd):/app -w /app python:3.8 pip install -r requirements.txt
+      - docker run -v $(pwd):/app -w /app python:3.8 pip install pytest
+      - docker run -v $(pwd):/app -w /app python:3.8 pip install jinja2 --upgrade
   build:
     commands:
       - echo Build started on `date`
@@ -19,4 +19,4 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Running tests...
-      - pytest
+      - docker run -v $(pwd):/app -w /app python:3.8 pytest
