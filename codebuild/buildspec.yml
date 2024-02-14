@@ -1,16 +1,10 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: 20
+  pre_build:
     commands:
-      - echo Upgrading pip...
-      - docker run -v $(pwd):/app -w /app python:3.8 pip install --upgrade pip
-      - echo Installing dependencies...
-      - docker run -v $(pwd):/app -w /app python:3.8 pip install -r requirements.txt
-      - docker run -v $(pwd):/app -w /app python:3.8 pip install pytest
-      - docker run -v $(pwd):/app -w /app python:3.8 pip install jinja2 --upgrade
+      - echo Building Docker image...
+      - docker build -t my-python-app .
   build:
     commands:
       - echo Build started on `date`
@@ -19,4 +13,4 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Running tests...
-      - docker run -v $(pwd):/app -w /app python:3.8 pytest
+      - docker run -v $(pwd):/app -w /app my-python-app pytest
